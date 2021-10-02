@@ -1,58 +1,71 @@
-<form class="input-form">
-  <mat-form-field class="form-full-width">
-    <mat-label>Email</mat-label>
-    <input type="email" matInput [formControl]="email" [errorStateMatcher]="matcher" placeholder="Ex. test@email.com">
-    <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
-      <strong>Please enter a valid email address</strong>
-    </mat-error>
-    <mat-error *ngIf="email.hasError('required')">
-      <strong>Email is required</strong>
-    </mat-error>
-  </mat-form-field>
-</form>
-<nav mat-tab-nav-bar aria-label="navigation links" *ngIf="isRegisterRoute">
-  <a mat-tab-link [class.active]="registerMethod === 'camera'" (click)="registerMethod='camera'">
-    Camera
-  </a>
-  <a mat-tab-link [class.active]="registerMethod === 'upload'" (click)="registerMethod='upload'">
-    Upload
-  </a>
-</nav>
-<mat-card class="login-method camera" [hidden]="registerMethod !=='camera'" *ngIf="isRegisterRoute">
-  <mat-card-content>
-    <img [hidden]="!imageUrl" [src]="imageUrl" />
-    <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
-  </mat-card-content>
-</mat-card>
-<mat-card class="login-method upload" [hidden]="registerMethod !=='upload'" *ngIf="isRegisterRoute">
-  <mat-card-content>
-    <img [hidden]="!imageUrl" [src]="imageUrl" />
-    <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
-  </mat-card-content>
-</mat-card>
-<nav mat-tab-nav-bar aria-label="navigation links" *ngIf="isLoginRoute">
-  <a mat-tab-link [class.active]="loginMethod === 'camera'" (click)="loginMethod='camera'">
-    Camera
-  </a>
-  <a mat-tab-link [class.active]="loginMethod === 'upload'" (click)="loginMethod='upload'">
-    Upload
-  </a>
-</nav>
-<mat-card class="login-method camera" [hidden]="loginMethod !=='camera'" *ngIf="isLoginRoute">
-  <mat-card-content>
-    <img [hidden]="!imageUrl" [src]="imageUrl" />
-    <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
-  </mat-card-content>
-</mat-card>
-<mat-card class="login-method upload" [hidden]="loginMethod !=='upload'" *ngIf="isLoginRoute">
-  <mat-card-content>
-    <img [hidden]="!imageUrl" [src]="imageUrl" />
-    <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
-  </mat-card-content>
-</mat-card>
-<div class="buttons">
-  <button mat-raised-button color="primary" *ngIf="isRegisterRoute" (click)="register()"
-    [disabled]="!email.valid || !imageUrl">Register</button>
-  <button mat-raised-button color="primary" *ngIf="isLoginRoute" (click)="login()"
-    [disabled]="!email.valid || !imageUrl">Login</button>
+<div class="row">
+  <div class="col-12">
+    <form class="input-form">
+      <mat-form-field class="form-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="email" [errorStateMatcher]="matcher"
+          placeholder="Ex. test@email.com">
+        <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+          <strong>Please enter a valid email address</strong>
+        </mat-error>
+        <mat-error *ngIf="email.hasError('required')">
+          <strong>Email is required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12" *ngIf="isRegisterRoute">
+    <nav mat-tab-nav-bar aria-label="navigation links">
+      <a mat-tab-link [class.active]="registerMethod === 'camera'" (click)="registerMethod='camera'">
+        Camera
+      </a>
+      <a mat-tab-link [class.active]="registerMethod === 'upload'" (click)="registerMethod='upload'">
+        Upload
+      </a>
+    </nav>
+    <mat-card class="login-method camera" [hidden]="registerMethod !=='camera'">
+      <mat-card-content>
+        <img [hidden]="!imageUrl" [src]="imageUrl" />
+        <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="login-method upload" [hidden]="registerMethod !=='upload'">
+      <mat-card-content>
+        <img [hidden]="!imageUrl" [src]="imageUrl" />
+        <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
+      </mat-card-content>
+    </mat-card>
+    <div class="buttons">
+      <button mat-raised-button color="primary" (click)="register()"
+        [disabled]="!email.valid || !imageUrl">Register</button>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="isLoginRoute">
+    <nav mat-tab-nav-bar aria-label="navigation links">
+      <a mat-tab-link [class.active]="loginMethod === 'camera'" (click)="loginMethod='camera'">
+        Camera
+      </a>
+      <a mat-tab-link [class.active]="loginMethod === 'upload'" (click)="loginMethod='upload'">
+        Upload
+      </a>
+    </nav>
+    <mat-card class="login-method camera" [hidden]="loginMethod !=='camera'">
+      <mat-card-content>
+        <img [hidden]="!imageUrl" [src]="imageUrl" />
+        <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="login-method upload" [hidden]="loginMethod !=='upload'">
+      <mat-card-content>
+        <img [hidden]="!imageUrl" [src]="imageUrl" />
+        <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
+      </mat-card-content>
+    </mat-card>
+    <div class="buttons">
+      <button mat-raised-button color="primary" (click)="login()"
+        [disabled]="!email.valid || !imageUrl">Login</button>
+    </div>
+  </div>
 </div>
