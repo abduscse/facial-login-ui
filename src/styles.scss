@@ -1,0 +1,117 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+html,
+body,
+.mat-sidenav-container {
+    height: 100%;
+}
+
+a[mat-tab-link] {
+    display: inline-block;
+    text-decoration: none;
+    padding: 15px;
+}
+
+a[mat-tab-link].active {
+    background-color: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+*[hidden] {
+    display: none;
+}
+
+.mat-card[hidden] {
+    display: none;
+}
+
+.mat-card {
+    text-align: center;
+}
+
+.mat-card-content {
+    position: relative;
+}
+
+.mat-card.login-method mat-card-content {
+    min-height: 400px;
+}
+
+.mat-card-content img {
+    position: relative;
+}
+
+.mat-card.login-method {
+    min-height: 400px;
+}
+
+.mat-card.login-method mat-icon {
+    position: absolute;
+    width: 250px;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 250px;
+    z-index: 0;
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.mat-card.login-method mat-icon.small {
+    transform: none;
+    font-size: 50px;
+    left: 0;
+    width: 50px;
+    opacity: 1;
+    z-index: 2;
+}
+
+.camera-snapshot,
+.image-picker {
+    cursor: pointer;
+}
+
+.buttons {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.mat-card {
+    margin-top: 20px;
+}
+
+.mat-card img,
+video {
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.mat-toolbar button,
+.mat-toolbar button:focus {
+    background: none;
+    border: none;
+    color: white;
+    outline: none;
+}
+
+.input-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.form-full-width {
+    width: 100%;
+}
