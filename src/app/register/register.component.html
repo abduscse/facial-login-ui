@@ -27,13 +27,11 @@
     </nav>
     <mat-card class="login-method camera" [hidden]="registerMethod !=='camera'">
       <mat-card-content>
-        <img [hidden]="!imageUrl" [src]="imageUrl" />
         <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
       </mat-card-content>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="registerMethod !=='upload'">
       <mat-card-content>
-        <img [hidden]="!imageUrl" [src]="imageUrl" />
         <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
       </mat-card-content>
     </mat-card>
@@ -53,13 +51,11 @@
     </nav>
     <mat-card class="login-method camera" [hidden]="loginMethod !=='camera'">
       <mat-card-content>
-        <img [hidden]="!imageUrl" [src]="imageUrl" />
         <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
       </mat-card-content>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="loginMethod !=='upload'">
       <mat-card-content>
-        <img [hidden]="!imageUrl" [src]="imageUrl" />
         <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
       </mat-card-content>
     </mat-card>

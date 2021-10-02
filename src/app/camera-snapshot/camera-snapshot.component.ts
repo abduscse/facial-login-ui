@@ -25,9 +25,16 @@ export class CameraSnapshotComponent implements OnInit {
           this.video.nativeElement.srcObject = stream;
           this.video.nativeElement.play();
           this.error = null;
-          this.drawImageToCanvas(this.video.nativeElement);
-          this.imageCaptured.emit(this.canvas.nativeElement.toDataURL("image/png"));
-          this.isCaptured = true;
+          setTimeout(() => {
+            // captures face image and emit as data url
+            this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, this.constraints.width, this.constraints.height);
+            this.imageUrl = this.canvas.nativeElement.toDataURL();
+            this.imageCaptured.emit(this.imageUrl);
+            this.isCaptured = true;
+            //stop video
+            stream.getVideoTracks()[0].stop();
+            this.ref.detectChanges();
+          }, 3000);
         } else {
           this.error = "You have no output video device";
         }
@@ -35,9 +42,5 @@ export class CameraSnapshotComponent implements OnInit {
         this.error = e;
       }
     }
-  }
-
-  drawImageToCanvas(image: any) {
-    this.canvas.nativeElement.getContext("2d").drawImage(image, 0, 0, this.constraints.width, this.constraints.height);
   }
 }
