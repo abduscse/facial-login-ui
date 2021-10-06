@@ -139,13 +139,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "face-login",
+      "app",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "face-login",
+      "app",
       "kebab-case"
     ]
   }

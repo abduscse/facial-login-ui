@@ -7,6 +7,7 @@ import { AppMaterializeModule } from './app-materialize.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CameraSnapshotComponent } from './camera-snapshot/camera-snapshot.component';
+import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 
@@ -15,7 +16,8 @@ import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
     AppComponent,
     SideNavBarComponent,
     RegisterComponent,
-    CameraSnapshotComponent
+    CameraSnapshotComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

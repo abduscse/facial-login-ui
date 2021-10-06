@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppService } from '../app.service';
 import { User } from '../shared/model/user.types';
 
@@ -17,7 +19,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnDestroy {
+  menuID: string;
   imageUrl: any;
   registerMethod = 'camera';
   loginMethod = 'camera';
@@ -26,27 +29,49 @@ export class RegisterComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   user: User = new User();
-  constructor(private ref: ChangeDetectorRef, public router: Router, private appService: AppService) {
+  duration = 1500;
+  subscriptions: Subscription[] = [];
+  constructor(private ref: ChangeDetectorRef, public router: Router, private appService: AppService, private snackBar: MatSnackBar) {
     this.isRegisterRoute = router.url.split('/')[1] === 'register';
     this.isLoginRoute = router.url.split('/')[1] === 'login';
   }
-  ngOnInit(): void { }
-  getCapturedImage(data: any) {
+  getCapturedImage(data: any): void {
     this.imageUrl = data;
     this.ref.detectChanges();
   }
-  register() {
+  register(): void {
     this.user.email = this.email.value;
     this.user.imageURL = this.imageUrl;
-
-    this.appService.registerUser(this.user.email, this.user.imageURL).subscribe((data) => {
-      console.log(data);
-    }, (error) => {
-      console.log(error);
-    });
+    if (this.user.email && this.user.imageURL) {
+      this.snackBar.open('Registration successful!', 'Go To Home', { duration: this.duration }).afterDismissed().subscribe(() => {
+        this.appService.sendEmailID(this.user.email);
+      });
+      const subscription = this.appService.registerUser(this.user.email, this.user.imageURL).subscribe((data) => {
+        console.log(data);
+      }, (error) => {
+        console.log(error);
+      });
+      this.subscriptions.push(subscription);
+    }
   }
-  login() {
+  login(): void {
     this.user.email = this.email.value;
     this.user.imageURL = this.imageUrl;
+    if (this.user.email && this.user.imageURL) {
+      this.snackBar.open('Login successful!', 'Go To Home', { duration: this.duration }).afterDismissed().subscribe(() => {
+        this.appService.sendEmailID(this.user.email);
+      });
+    }
+  }
+  navigateToLogin(): void {
+    this.appService.sendMenuID('login');
+    this.router.navigate(['login']);
+  }
+  navigateToRegister(): void {
+    this.appService.sendMenuID('register');
+    this.router.navigate(['register']);
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

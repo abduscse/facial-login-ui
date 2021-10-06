@@ -26,9 +26,7 @@
       </a>
     </nav>
     <mat-card class="login-method camera" [hidden]="registerMethod !=='camera'">
-      <mat-card-content>
-        <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
-      </mat-card-content>
+      <app-camera-snapshot (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="registerMethod !=='upload'">
       <mat-card-content>
@@ -36,7 +34,7 @@
       </mat-card-content>
     </mat-card>
     <div class="buttons">
-      <button mat-raised-button color="primary" (click)="register()"
+      <button type="button" mat-raised-button color="primary" (click)="register()"
         [disabled]="!email.valid || !imageUrl">Register</button>
     </div>
   </div>
@@ -51,7 +49,7 @@
     </nav>
     <mat-card class="login-method camera" [hidden]="loginMethod !=='camera'">
       <mat-card-content>
-        <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
+        <app-camera-snapshot (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
       </mat-card-content>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="loginMethod !=='upload'">
@@ -60,8 +58,11 @@
       </mat-card-content>
     </mat-card>
     <div class="buttons">
-      <button mat-raised-button color="primary" (click)="login()"
+      <button type="button" mat-raised-button color="primary" (click)="login()"
         [disabled]="!email.valid || !imageUrl">Login</button>
     </div>
   </div>
 </div>
+<p *ngIf="isRegisterRoute">Already got and account ? Go and <a class="menu-link" (click)="navigateToLogin()">Login!</a>
+</p>
+<p *ngIf="isLoginRoute">Got no account ? Go and <a class="menu-link" (click)="navigateToRegister()">Register!</a></p>
