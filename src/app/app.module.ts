@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CameraSnapshotComponent } from './camera-snapshot/camera-snapshot.component';
 import { HomeComponent } from './home/home.component';
+import { LoaderInterceptor } from './loader/loader-interceptor.service';
+import { LoaderComponent } from './loader/loader.component';
+import { LoaderService } from './loader/loader.service';
 import { RegisterComponent } from './register/register.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 
@@ -17,7 +20,8 @@ import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
     SideNavBarComponent,
     RegisterComponent,
     CameraSnapshotComponent,
-    HomeComponent
+    HomeComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,7 @@ import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
     AppMaterializeModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [LoaderService, { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

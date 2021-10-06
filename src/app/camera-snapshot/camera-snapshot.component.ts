@@ -8,8 +8,8 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 export class CameraSnapshotComponent implements OnInit {
   @ViewChild('video') public video: ElementRef;
   @ViewChild('canvas') public canvas: ElementRef;
-  @Output() imageCaptured = new EventEmitter();
-  imageUrl: any;
+  @Output() imageCaptureAction = new EventEmitter();
+  imageUrl: string;
   error: any;
   isCaptured: boolean;
   constraints = { width: 400, height: 400 };
@@ -35,7 +35,13 @@ export class CameraSnapshotComponent implements OnInit {
   capturePhoto(): void {
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, this.constraints.width, this.constraints.height);
     this.imageUrl = this.canvas.nativeElement.toDataURL();
-    this.imageCaptured.emit(this.imageUrl);
+    const imageElement: HTMLImageElement = new Image();
+    imageElement.src = this.imageUrl;
+    this.imageCaptureAction.emit(imageElement);
     this.isCaptured = true;
+  }
+  retakePhoto(): void {
+    this.isCaptured = false;
+    this.imageUrl = null;
   }
 }

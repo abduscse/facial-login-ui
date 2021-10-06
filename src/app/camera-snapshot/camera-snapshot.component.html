@@ -8,5 +8,5 @@
 </mat-card-content>
 <mat-card-actions>
   <button type="button" mat-raised-button color="primary" *ngIf="!isCaptured" (click)="capturePhoto()">Capture</button>
-  <button type="button" mat-raised-button color="warn" *ngIf="isCaptured" (click)="isCaptured = false">Retake</button>
+  <button type="button" mat-raised-button color="warn" *ngIf="isCaptured" (click)="retakePhoto()">Retake</button>
 </mat-card-actions>

@@ -14,7 +14,7 @@ export class AppService {
 
   private emailID = new BehaviorSubject<any>(null);
   emailID$ = this.emailID.asObservable();
-  
+
   private logoutFlag = new BehaviorSubject<any>(null);
   logoutFlag$ = this.logoutFlag.asObservable();
 

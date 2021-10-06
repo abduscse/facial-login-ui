@@ -1,4 +1,5 @@
 export class User {
   email: string;
-  imageURL: string;
+  imageUrl: string;
+  imageElement: HTMLImageElement;
 }

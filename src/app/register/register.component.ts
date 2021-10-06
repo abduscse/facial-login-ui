@@ -21,7 +21,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegisterComponent implements OnDestroy {
   menuID: string;
-  imageUrl: any;
   registerMethod = 'camera';
   loginMethod = 'camera';
   isRegisterRoute: boolean;
@@ -29,26 +28,24 @@ export class RegisterComponent implements OnDestroy {
   email = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   user: User = new User();
-  duration = 2000;
   action = 'Go To Home';
-  snackBarConfig: MatSnackBarConfig = { duration: this.duration, horizontalPosition: 'right' };
+  snackBarConfig: MatSnackBarConfig = { duration: 2000, horizontalPosition: 'right' };
   subscriptions: Subscription[] = [];
   constructor(private ref: ChangeDetectorRef, public router: Router, private appService: AppService, private snackBar: MatSnackBar) {
     this.isRegisterRoute = router.url.split('/')[1] === 'register';
     this.isLoginRoute = router.url.split('/')[1] === 'login';
   }
-  getCapturedImage(data: any): void {
-    this.imageUrl = data;
+  getCapturedImage($event: any): void {
+    this.user.imageElement = $event;
     this.ref.detectChanges();
   }
   register(): void {
     this.user.email = this.email.value;
-    this.user.imageURL = this.imageUrl;
-    if (this.user.email && this.user.imageURL) {
+    if (this.user.email && this.user.imageElement) {
       this.snackBar.open('Registration successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
         this.appService.sendEmailID(this.user.email);
       });
-      const subscription = this.appService.registerUser(this.user.email, this.user.imageURL).subscribe((data) => {
+      const subscription = this.appService.registerUser(this.user.email, this.user.imageElement).subscribe((data) => {
         console.log(data);
       }, (error) => {
         console.log(error);
@@ -58,8 +55,7 @@ export class RegisterComponent implements OnDestroy {
   }
   login(): void {
     this.user.email = this.email.value;
-    this.user.imageURL = this.imageUrl;
-    if (this.user.email && this.user.imageURL) {
+    if (this.user.email && this.user.imageElement) {
       this.snackBar.open('Login successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
         this.appService.sendEmailID(this.user.email);
       });

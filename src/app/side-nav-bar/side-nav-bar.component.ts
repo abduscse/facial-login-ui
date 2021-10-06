@@ -37,7 +37,7 @@ export class SideNavBarComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const emailSubscription = this.appService.emailID$.subscribe((emailID: string) => {
       if (emailID) {
-        this.menus = this.appService.getMenus();
+        this.menus = this.appService.getMenus().filter(menu => menu.id === 'home');
         this.navigateToHome();
       }
     });
