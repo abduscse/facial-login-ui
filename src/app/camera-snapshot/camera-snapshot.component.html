@@ -1,6 +1,6 @@
 <mat-card-content>
   <div class="camera-snapshot">
-    <mat-icon [class.small]="imageUrl">camera_alt</mat-icon>
+    <span class="material-icons" [class.small]="imageUrl">camera_alt</span>
     <video #video [class.show]="!isCaptured" [class.hide]="isCaptured" id="video" autoplay></video>
     <canvas #canvas [class.show]="isCaptured" [class.hide]="!isCaptured" id="canvas" [width]="constraints.width"
       [height]="constraints.height"></canvas>

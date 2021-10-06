@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import "~@ng-select/ng-select/themes/material.theme.css";
 @import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~material-icons/iconfont/material-icons.css";
 
 html,
 body {
@@ -56,7 +57,7 @@ a[mat-tab-link].active {
     min-width: 425px;
 }
 
-.mat-card.login-method mat-icon {
+.mat-card.login-method .material-icons {
     position: absolute;
     width: 250px;
     left: 50%;
@@ -67,7 +68,7 @@ a[mat-tab-link].active {
     cursor: pointer;
 }
 
-.mat-card.login-method mat-icon.small {
+.mat-card.login-method .material-icons.small {
     transform: none;
     font-size: 50px;
     left: 0;

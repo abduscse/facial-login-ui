@@ -1,11 +1,11 @@
 <mat-toolbar class="mat-elevation-z8">
   <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-    <mat-icon *ngIf="!sidenav.opened">
+    <span class="material-icons" *ngIf="!sidenav.opened">
       menu
-    </mat-icon>
-    <mat-icon *ngIf="sidenav.opened">
+    </span>
+    <span class="material-icons" *ngIf="sidenav.opened">
       close
-    </mat-icon>
+    </span>
   </button>
   Facial Recognition Login
 </mat-toolbar>
@@ -14,7 +14,7 @@
     <mat-nav-list class="mat-nav-list">
       <a mat-list-item *ngFor="let menu of menus; let i = index;" routerLink="{{menu.path}}" title="{{menu.title}}"
         (click)="getMenuID(menu.id); menuID = menu.id" [ngClass]="{'active': menuID === menu.id}">
-        <mat-icon>{{menu.icon}}</mat-icon>
+        <span class="material-icons">{{menu.icon}}</span>
         <span>{{menu.title}}</span>
       </a>
     </mat-nav-list>
