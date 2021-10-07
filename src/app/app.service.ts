@@ -20,7 +20,9 @@ export class AppService {
 
   registerUser(email, imageElement): any {
     const url = this.baseUrl + 'face-api-register';
-    return this.http.post(url, { email, imageElement });
+    const reqBody = { email, imageElement };
+    console.log(reqBody);
+    return this.http.post(url, reqBody);
   }
   loginUser(): any {
 

@@ -42,11 +42,11 @@ export class RegisterComponent implements OnDestroy {
   register(): void {
     this.user.email = this.email.value;
     if (this.user.email && this.user.imageElement) {
-      this.snackBar.open('Registration successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
-        this.appService.sendEmailID(this.user.email);
-      });
       const subscription = this.appService.registerUser(this.user.email, this.user.imageElement).subscribe((data) => {
         console.log(data);
+        this.snackBar.open('Registration successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
+          this.appService.sendEmailID(this.user.email);
+        });
       }, (error) => {
         console.log(error);
       });
