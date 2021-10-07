@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AppService {
-  baseUrl = 'localhost:3000/';
+  baseUrl = 'http://localhost:3000/';
   constructor(private http: HttpClient) { }
 
   private menuID = new BehaviorSubject<any>(null);
@@ -18,9 +18,9 @@ export class AppService {
   private logoutFlag = new BehaviorSubject<any>(null);
   logoutFlag$ = this.logoutFlag.asObservable();
 
-  registerUser(email, image): any {
-    const url = this.baseUrl + 'login?email=' + email;
-    return this.http.post(url, image);
+  registerUser(email, imageElement): any {
+    const url = this.baseUrl + 'face-api-register';
+    return this.http.post(url, { email, imageElement });
   }
   loginUser(): any {
 
