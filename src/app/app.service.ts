@@ -18,14 +18,21 @@ export class AppService {
   private logoutFlag = new BehaviorSubject<any>(null);
   logoutFlag$ = this.logoutFlag.asObservable();
 
-  registerUser(email, imageElement): any {
-    const url = this.baseUrl + 'face-api-register';
-    const reqBody = { email, imageElement };
-    console.log(reqBody);
-    return this.http.post(url, reqBody);
+  registerUser(email, imageFile): any {
+    const url = this.baseUrl + 'register?email=' + email;
+    return this.http.post(url, imageFile, {
+      headers: {
+        'Content-Type': 'application/octet-stream'
+      }
+    });
   }
-  loginUser(): any {
-
+  loginUser(email, imageFile): any {
+    const url = this.baseUrl + 'login?email=' + email;
+    return this.http.post(url, imageFile, {
+      headers: {
+        'Content-Type': 'application/octet-stream'
+      }
+    });
   }
   sendMenuID(menuID: string): any {
     this.menuID.next(menuID);

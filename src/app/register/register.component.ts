@@ -41,8 +41,8 @@ export class RegisterComponent implements OnDestroy {
   }
   register(): void {
     this.user.email = this.email.value;
-    if (this.user.email && this.user.imageElement) {
-      const subscription = this.appService.registerUser(this.user.email, this.user.imageElement).subscribe((data) => {
+    if (this.user.email && this.user.imageFile) {
+      const subscription = this.appService.registerUser(this.user.email, this.user.imageFile).subscribe((data) => {
         console.log(data);
         this.snackBar.open('Registration successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
           this.appService.sendEmailID(this.user.email);
@@ -55,10 +55,16 @@ export class RegisterComponent implements OnDestroy {
   }
   login(): void {
     this.user.email = this.email.value;
-    if (this.user.email && this.user.imageElement) {
-      this.snackBar.open('Login successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
-        this.appService.sendEmailID(this.user.email);
+    if (this.user.email && this.user.imageFile) {
+      const subscription = this.appService.loginUser(this.user.email, this.user.imageFile).subscribe((data) => {
+        console.log(data);
+        this.snackBar.open('Login successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
+          this.appService.sendEmailID(this.user.email);
+        });
+      }, (error) => {
+        console.log(error);
       });
+      this.subscriptions.push(subscription);
     }
   }
   navigateToLogin(): void {
@@ -68,6 +74,9 @@ export class RegisterComponent implements OnDestroy {
   navigateToRegister(): void {
     this.appService.sendMenuID('register');
     this.router.navigate(['register']);
+  }
+  onFileChanged(event) {
+    this.user.imageFile = event.target.files[0];
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
