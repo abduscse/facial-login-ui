@@ -19,7 +19,7 @@ export class CameraSnapshotComponent implements OnInit {
   async initCamera(): Promise<any> {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: this.constraints });
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: this.constraints });
         if (stream) {
           this.video.nativeElement.srcObject = stream;
           this.video.nativeElement.play();
