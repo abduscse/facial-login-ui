@@ -30,14 +30,12 @@
     </mat-card>
     <mat-card class="login-method upload" [hidden]="registerMethod !=='upload'">
       <mat-card-content>
-        <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
-        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-        <button (click)="fileInput.click()">Select File</button>
+        <app-image-picker [imageUrl]="imageUrl" (imageUploadAction)="getUploadedImage($event)"></app-image-picker>
       </mat-card-content>
     </mat-card>
     <div class="buttons">
       <button type="button" mat-raised-button color="primary" (click)="register()"
-        [disabled]="!email.valid || !user?.imageFile">Register</button>
+        [disabled]="!(email.valid && (user?.imageFile || user?.imageUrl || user?.imageElement))">Register</button>
     </div>
   </div>
   <div class="col-12" *ngIf="isLoginRoute">
@@ -50,20 +48,16 @@
       </a>
     </nav>
     <mat-card class="login-method camera" [hidden]="loginMethod !=='camera'">
-      <mat-card-content>
-        <app-camera-snapshot (imageCaptureAction)="getCapturedImage($event)"></app-camera-snapshot>
-      </mat-card-content>
+      <app-camera-snapshot (imageCaptureAction)="getCapturedImage($event)"></app-camera-snapshot>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="loginMethod !=='upload'">
       <mat-card-content>
-        <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
-        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-        <button (click)="fileInput.click()">Select File</button>
+        <app-image-picker [imageUrl]="imageUrl" (imageUploadAction)="getUploadedImage($event)"></app-image-picker>
       </mat-card-content>
     </mat-card>
     <div class="buttons">
       <button type="button" mat-raised-button color="primary" (click)="login()"
-        [disabled]="!email.valid || !user?.imageFile">Login</button>
+        [disabled]="!(email.valid && (user?.imageFile || user?.imageUrl || user?.imageElement))">Login</button>
     </div>
   </div>
 </div>

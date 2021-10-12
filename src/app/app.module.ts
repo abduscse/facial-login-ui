@@ -13,6 +13,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { LoaderService } from './loader/loader.service';
 import { RegisterComponent } from './register/register.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
+import { ImagePickerComponent } from './image-picker/image-picker.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
     RegisterComponent,
     CameraSnapshotComponent,
     HomeComponent,
-    LoaderComponent
+    LoaderComponent,
+    ImagePickerComponent
   ],
   imports: [
     BrowserModule,

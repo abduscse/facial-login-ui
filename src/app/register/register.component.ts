@@ -75,7 +75,7 @@ export class RegisterComponent implements OnDestroy {
     this.appService.sendMenuID('register');
     this.router.navigate(['register']);
   }
-  onFileChanged(event) {
+  getUploadedImage(event: any) {
     this.user.imageFile = event.target.files[0];
   }
   ngOnDestroy(): void {
