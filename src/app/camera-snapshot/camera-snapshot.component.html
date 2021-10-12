@@ -4,6 +4,7 @@
     <video #video [class.show]="!isCaptured" [class.hide]="isCaptured" id="video" autoplay></video>
     <canvas #canvas [class.show]="isCaptured" [class.hide]="!isCaptured" id="canvas" [width]="constraints.width"
       [height]="constraints.height"></canvas>
+    <a id="link"></a>
   </div>
 </mat-card-content>
 <mat-card-actions>

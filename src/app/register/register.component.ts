@@ -21,8 +21,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegisterComponent implements OnDestroy {
   menuID: string;
-  registerMethod = 'camera';
-  loginMethod = 'camera';
+  registerMethod = 'upload';
+  loginMethod = 'upload';
   isRegisterRoute: boolean;
   isLoginRoute: boolean;
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnDestroy {
     this.isLoginRoute = router.url.split('/')[1] === 'login';
   }
   getCapturedImage($event: any): void {
-    this.user.imageElement = $event;
+    this.user.imageFile = $event.target.files[0];
     this.ref.detectChanges();
   }
   register(): void {
