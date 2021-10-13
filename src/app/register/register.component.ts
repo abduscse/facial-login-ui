@@ -28,8 +28,7 @@ export class RegisterComponent implements OnDestroy {
   email = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   user: User = new User();
-  action = 'Go To Home';
-  snackBarConfig: MatSnackBarConfig = { duration: 2000, horizontalPosition: 'right' };
+  snackBarConfig: MatSnackBarConfig = { duration: 5000, horizontalPosition: 'right' };
   subscriptions: Subscription[] = [];
   constructor(private ref: ChangeDetectorRef, public router: Router, private appService: AppService, private snackBar: MatSnackBar) {
     this.isRegisterRoute = router.url.split('/')[1] === 'register';
@@ -44,11 +43,11 @@ export class RegisterComponent implements OnDestroy {
     if (this.user.email && this.user.imageFile) {
       const subscription = this.appService.registerUser(this.user.email, this.user.imageFile).subscribe((data) => {
         console.log(data);
-        this.snackBar.open('Registration successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
-          this.appService.sendEmailID(this.user.email);
-        });
+        this.snackBar.open(data.message, 'OK', this.snackBarConfig);
+        this.appService.sendEmailID(this.user.email);
       }, (error) => {
         console.log(error);
+        this.snackBar.open(error.error.message, 'OK', this.snackBarConfig);
       });
       this.subscriptions.push(subscription);
     }
@@ -58,11 +57,11 @@ export class RegisterComponent implements OnDestroy {
     if (this.user.email && this.user.imageFile) {
       const subscription = this.appService.loginUser(this.user.email, this.user.imageFile).subscribe((data) => {
         console.log(data);
-        this.snackBar.open('Login successful!', this.action, this.snackBarConfig).afterDismissed().subscribe(() => {
-          this.appService.sendEmailID(this.user.email);
-        });
+        this.snackBar.open(data.message, 'OK', this.snackBarConfig);
+        this.appService.sendEmailID(this.user.email);
       }, (error) => {
         console.log(error);
+        this.snackBar.open(error.error.message, 'OK', this.snackBarConfig);
       });
       this.subscriptions.push(subscription);
     }
