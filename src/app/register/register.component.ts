@@ -43,11 +43,11 @@ export class RegisterComponent implements OnDestroy {
     if (this.user.email && this.user.imageFile) {
       const subscription = this.appService.registerUser(this.user.email, this.user.imageFile).subscribe((data) => {
         console.log(data);
-        this.snackBar.open(data.message, 'OK', this.snackBarConfig);
+        this.snackBar.open(data.message ?? 'Success!', 'OK', this.snackBarConfig);
         this.appService.sendEmailID(this.user.email);
       }, (error) => {
         console.log(error);
-        this.snackBar.open(error.error.message, 'OK', this.snackBarConfig);
+        this.snackBar.open(error.error.message ?? 'Something went wrong!', 'OK', this.snackBarConfig);
       });
       this.subscriptions.push(subscription);
     }
@@ -57,11 +57,11 @@ export class RegisterComponent implements OnDestroy {
     if (this.user.email && this.user.imageFile) {
       const subscription = this.appService.loginUser(this.user.email, this.user.imageFile).subscribe((data) => {
         console.log(data);
-        this.snackBar.open(data.message, 'OK', this.snackBarConfig);
+        this.snackBar.open(data.message ?? 'Success!', 'OK', this.snackBarConfig);
         this.appService.sendEmailID(this.user.email);
       }, (error) => {
         console.log(error);
-        this.snackBar.open(error.error.message, 'OK', this.snackBarConfig);
+        this.snackBar.open(error.error.message ?? 'Something went wrong!', 'OK', this.snackBarConfig);
       });
       this.subscriptions.push(subscription);
     }
