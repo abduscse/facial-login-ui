@@ -1,6 +1,13 @@
-<div class="camera-snapshot" (click)="initCamera()">
-  <mat-icon [class.small]="imageUrl">camera_alt</mat-icon>
-  <video #video [class.show]="!isCaptured" [class.hide]="isCaptured" id="video" autoplay></video>
-  <canvas #canvas [class.show]="isCaptured" [class.hide]="!isCaptured" id="canvas" [width]="constraints.width"
-    [height]="constraints.height"></canvas>
-</div>
+<mat-card-content>
+  <div class="camera-snapshot">
+    <span class="material-icons" [class.small]="imageUrl">camera_alt</span>
+    <video #video [class.show]="!isCaptured" [class.hide]="isCaptured" id="video" autoplay></video>
+    <canvas #canvas [class.show]="isCaptured" [class.hide]="!isCaptured" id="canvas" [width]="constraints.width"
+      [height]="constraints.height"></canvas>
+    <a id="link"></a>
+  </div>
+</mat-card-content>
+<mat-card-actions>
+  <button type="button" mat-raised-button color="primary" *ngIf="!isCaptured" (click)="capturePhoto()">Capture</button>
+  <button type="button" mat-raised-button color="warn" *ngIf="isCaptured" (click)="retakePhoto()">Retake</button>
+</mat-card-actions>

@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppService } from '../app.service';
 import { User } from '../shared/model/user.types';
 
@@ -17,36 +19,65 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  imageUrl: any;
-  registerMethod = 'camera';
-  loginMethod = 'camera';
+export class RegisterComponent implements OnDestroy {
+  menuID: string;
+  registerMethod = 'upload';
+  loginMethod = 'upload';
   isRegisterRoute: boolean;
   isLoginRoute: boolean;
   email = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   user: User = new User();
-  constructor(private ref: ChangeDetectorRef, public router: Router, private appService: AppService) {
+  snackBarConfig: MatSnackBarConfig = { duration: 5000, horizontalPosition: 'right' };
+  subscriptions: Subscription[] = [];
+  constructor(private ref: ChangeDetectorRef, public router: Router, private appService: AppService, private snackBar: MatSnackBar) {
     this.isRegisterRoute = router.url.split('/')[1] === 'register';
     this.isLoginRoute = router.url.split('/')[1] === 'login';
   }
-  ngOnInit(): void { }
-  getCapturedImage(data: any) {
-    this.imageUrl = data;
+  getCapturedImage($event: any): void {
+    this.user.imageFile = $event.target.files[0];
     this.ref.detectChanges();
   }
-  register() {
+  register(): void {
     this.user.email = this.email.value;
-    this.user.imageURL = this.imageUrl;
-
-    this.appService.registerUser(this.user.email, this.user.imageURL).subscribe((data) => {
-      console.log(data);
-    }, (error) => {
-      console.log(error);
-    });
+    if (this.user.email && this.user.imageFile) {
+      const subscription = this.appService.registerUser(this.user.email, this.user.imageFile).subscribe((data) => {
+        console.log(data);
+        this.snackBar.open(data.message ?? 'Success!', 'OK', this.snackBarConfig);
+        this.appService.sendEmailID(this.user.email);
+      }, (error) => {
+        console.log(error);
+        this.snackBar.open(error.error.message ?? 'Something went wrong!', 'OK', this.snackBarConfig);
+      });
+      this.subscriptions.push(subscription);
+    }
   }
-  login() {
+  login(): void {
     this.user.email = this.email.value;
-    this.user.imageURL = this.imageUrl;
+    if (this.user.email && this.user.imageFile) {
+      const subscription = this.appService.loginUser(this.user.email, this.user.imageFile).subscribe((data) => {
+        console.log(data);
+        this.snackBar.open(data.message ?? 'Success!', 'OK', this.snackBarConfig);
+        this.appService.sendEmailID(this.user.email);
+      }, (error) => {
+        console.log(error);
+        this.snackBar.open(error.error.message ?? 'Something went wrong!', 'OK', this.snackBarConfig);
+      });
+      this.subscriptions.push(subscription);
+    }
+  }
+  navigateToLogin(): void {
+    this.appService.sendMenuID('login');
+    this.router.navigate(['login']);
+  }
+  navigateToRegister(): void {
+    this.appService.sendMenuID('register');
+    this.router.navigate(['register']);
+  }
+  getUploadedImage(event: any) {
+    this.user.imageFile = event.target.files[0];
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

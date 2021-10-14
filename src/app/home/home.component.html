@@ -1,0 +1,8 @@
+<div *ngIf="emailID; else defaultUser">
+  <h3>Hello <strong class="user-name">{{emailID}}</strong>, {{header}}</h3>
+  <button type="button" class="float-right" mat-raised-button color="primary" (click)="logout()">Logout</button>
+</div>
+<ng-template #defaultUser>
+  <h3>Hello <strong class="user-name">User</strong>, {{header}}</h3>
+  <button type="button" class="float-right" mat-raised-button color="primary" (click)="logout()">Logout</button>
+</ng-template>

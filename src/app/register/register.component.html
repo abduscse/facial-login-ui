@@ -18,50 +18,49 @@
 <div class="row">
   <div class="col-12" *ngIf="isRegisterRoute">
     <nav mat-tab-nav-bar aria-label="navigation links">
-      <a mat-tab-link [class.active]="registerMethod === 'camera'" (click)="registerMethod='camera'">
-        Camera
-      </a>
       <a mat-tab-link [class.active]="registerMethod === 'upload'" (click)="registerMethod='upload'">
         Upload
       </a>
+      <a mat-tab-link [class.active]="registerMethod === 'camera'" (click)="registerMethod='camera'">
+        Camera
+      </a>
     </nav>
     <mat-card class="login-method camera" [hidden]="registerMethod !=='camera'">
-      <mat-card-content>
-        <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
-      </mat-card-content>
+      <app-camera-snapshot (imageCaptureAction)="getCapturedImage($event)"></app-camera-snapshot>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="registerMethod !=='upload'">
       <mat-card-content>
-        <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
+        <app-image-picker [imageUrl]="imageUrl" (imageUploadAction)="getUploadedImage($event)"></app-image-picker>
       </mat-card-content>
     </mat-card>
     <div class="buttons">
-      <button mat-raised-button color="primary" (click)="register()"
-        [disabled]="!email.valid || !imageUrl">Register</button>
+      <button type="button" mat-raised-button color="primary" (click)="register()"
+        [disabled]="!(email.valid && (user?.imageFile || user?.imageUrl || user?.imageElement))">Register</button>
     </div>
   </div>
   <div class="col-12" *ngIf="isLoginRoute">
     <nav mat-tab-nav-bar aria-label="navigation links">
-      <a mat-tab-link [class.active]="loginMethod === 'camera'" (click)="loginMethod='camera'">
-        Camera
-      </a>
       <a mat-tab-link [class.active]="loginMethod === 'upload'" (click)="loginMethod='upload'">
         Upload
       </a>
+      <a mat-tab-link [class.active]="loginMethod === 'camera'" (click)="loginMethod='camera'">
+        Camera
+      </a>
     </nav>
     <mat-card class="login-method camera" [hidden]="loginMethod !=='camera'">
-      <mat-card-content>
-        <app-camera-snapshot [imageUrl]="imageUrl" (imageCaptured)="getCapturedImage($event)"></app-camera-snapshot>
-      </mat-card-content>
+      <app-camera-snapshot (imageCaptureAction)="getCapturedImage($event)"></app-camera-snapshot>
     </mat-card>
     <mat-card class="login-method upload" [hidden]="loginMethod !=='upload'">
       <mat-card-content>
-        <!-- <app-image-picker [imageUrl]="imageUrl" (imagePicked)="getCapturedImage($event)"></app-image-picker> -->
+        <app-image-picker [imageUrl]="imageUrl" (imageUploadAction)="getUploadedImage($event)"></app-image-picker>
       </mat-card-content>
     </mat-card>
     <div class="buttons">
-      <button mat-raised-button color="primary" (click)="login()"
-        [disabled]="!email.valid || !imageUrl">Login</button>
+      <button type="button" mat-raised-button color="primary" (click)="login()"
+        [disabled]="!(email.valid && (user?.imageFile || user?.imageUrl || user?.imageElement))">Login</button>
     </div>
   </div>
 </div>
+<p *ngIf="isRegisterRoute">Already got and account ? Go and <a class="menu-link" (click)="navigateToLogin()">Login!</a>
+</p>
+<p *ngIf="isLoginRoute">Got no account ? Go and <a class="menu-link" (click)="navigateToRegister()">Register!</a></p>

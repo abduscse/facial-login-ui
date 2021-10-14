@@ -1,0 +1,5 @@
+<div class="image-picker" (click)="fileInput.click()">
+  <span class="material-icons" [class.small]="imageUrl">file_upload</span>
+  <img src={{imageUrl}} />
+  <input type="file" style="display: none" (change)="uploadImage($event)" #fileInput>
+</div>
